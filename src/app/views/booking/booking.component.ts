@@ -46,15 +46,20 @@ export class BookingComponent implements OnInit {
     this.isLoading = true;
     this.bookingService.getBookingData().subscribe({
       next: (booking: Booking) => {
-        if (booking.data.items.length > 0) {
-          booking.data.items[0].selected = true;
-          const subItems: Item[] = booking.data.items[0].items;
-          if (subItems.length > 0) {
-            this.orderSummary = this.getOrderSummary(subItems.filter(itm => itm.isPrefer)[0]);
+        if (booking.status === "success") {
+          booking.data.items = []
+          if (booking.data.items.length > 0) {
+            booking.data.items[0].selected = true;
+            const subItems: Item[] = booking.data.items[0].items;
+            if (subItems.length > 0) {
+              this.orderSummary = this.getOrderSummary(subItems.filter(itm => itm.isPrefer)[0]);
+            }
+            this.isLoading = false;
           }
+        } else {
+          this.commonService.setToastr(500, 'Oops! There seems to be an error. Please try again later.');
         }
         this.booking = booking;
-        this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
         this.commonService.setToastr(error.status, error.message);
@@ -75,5 +80,23 @@ export class BookingComponent implements OnInit {
     const hours: number = minutes / 60;
     const pricePerHour: number = unitPrice / hours;
     return `${pricePerHour.toFixed(2)} / ${unitOfMeasure}`;
+  }
+
+  public book(): void {
+    if (this.booking.status === "success") {
+      const selectedItem = this.booking.data.items.find(item => item.selected);
+      if (selectedItem) {
+        const selectedSubItem = this.booking.data.items[this.activeIndex]?.items.find(item => item.isPrefer);
+        if (selectedSubItem) {
+          this.commonService.setToastr(200, 'Congratulations! Your booking for cleaning service has been confirmed.');
+        } else {
+          this.commonService.setToastr(401, "Please select a desired hour.");
+        }
+      } else {
+        this.commonService.setToastr(401, "Please select a desired slot.");
+      }
+    } else {
+      this.commonService.setToastr(500, "Oops! There seems to be an error. Please try again later.");
+    }
   }
 }

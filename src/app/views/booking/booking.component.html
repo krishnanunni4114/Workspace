@@ -34,7 +34,7 @@
                                 </button>
                             </div>
                             <div class="col-lg-6 align-self-center">
-                                <h6 class="pricing">
+                                <h6 class="pricing fw-bold">
                                     {{config.currency}}
                                     {{calculateHourlyPrice(item.unitPrice,item.minutes,item.unitOfMeasure)}}</h6>
                                 <p>{{item.subTitle}}</p>
@@ -64,13 +64,14 @@
                                 <h5 class="mb-0 fw-bold">
                                     {{config.currency}} {{orderSummary.grandTotal | number : '1.2-2'}}
                                 </h5>
-                                <p class="mb-0 text-warning c-pointer" (click)="showSummary=!showSummary">{{showSummary?'Hide':'Show'}} Order
+                                <p class="mb-0 text-warning c-pointer" (click)="showSummary=!showSummary">
+                                    {{showSummary?'Hide':'Show'}} Order
                                     Summary <i
                                         [ngClass]="{'bi bi-chevron-up':showSummary,'bi bi-chevron-down':!showSummary}"></i>
                                 </p>
                             </div>
-                            <button type="button" class="btn btn-warning w-100 text-white fw-bold">Proceed to Book <i
-                                    class="bi bi-chevron-right float-end"></i>
+                            <button type="button" class="btn btn-warning w-100 text-white fw-bold"
+                                (click)="book()">Proceed to Book <i class="bi bi-chevron-right float-end"></i>
                             </button>
                         </div>
                         <ng-container>
