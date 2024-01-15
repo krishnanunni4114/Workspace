@@ -17,6 +17,7 @@ export class BookingComponent implements OnInit {
   public activeIndex: number = 0;
   public orderSummary!: OrderSummary;
   public config: Config = CONFIG;
+  public isLoading: boolean = false;
 
   constructor(
     private bookingService: BookingService,
@@ -25,7 +26,7 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.booking = { data: { items: [] as DataItem[] } as Data } as Booking;
-    this.orderSummary = {} as OrderSummary;
+    this.orderSummary = {count:0,itemName:'0 hours',total:0,grandTotal:0} as OrderSummary;
     this.getBookingData();
   }
 
@@ -41,6 +42,7 @@ export class BookingComponent implements OnInit {
   }
 
   private getBookingData() {
+    this.isLoading = true;
     this.bookingService.getBookingData().subscribe({
       next: (booking: Booking) => {
         if (booking.data.items.length > 0) {
@@ -51,9 +53,11 @@ export class BookingComponent implements OnInit {
           }
         }
         this.booking = booking;
+        this.isLoading = false;
       },
       error: (error: HttpErrorResponse) => {
         this.commonService.setToastr(error.status, error.message);
+        this.isLoading = false;
       }
     });
   }

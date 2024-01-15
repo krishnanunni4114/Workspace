@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BookingComponent } from './views/booking/booking.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
     ToastrModule.forRoot({
       // timeOut: 1000,
       // positionClass: 'toast-bottom-right',

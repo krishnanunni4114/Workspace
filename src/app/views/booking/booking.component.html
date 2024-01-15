@@ -6,6 +6,10 @@
                     <div class="slot">
                         <div class="mb-3">
                             <h6>{{booking.data.title}}</h6>
+                            <ngx-skeleton-loader *ngIf="isLoading" count="1"
+                                [theme]="{ 'border-radius': '4px',margin:'0 12px 10px 0',height:'20px'}"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader *ngIf="isLoading" count="3" appearance="circle"
+                                [theme]="{ 'border-radius': '4px', height: '45px',width: '112px' ,margin:'0 12px 0 0'}"></ngx-skeleton-loader>
                         </div>
                         <div class="slot-item mb-4">
                             <button type="button" *ngFor="let item of booking.data.items; let i=index;"
@@ -18,6 +22,8 @@
                         </div>
                         <div class="mb-3">
                             <h6>{{booking.data.itemTitle}}</h6>
+                            <ngx-skeleton-loader *ngIf="isLoading" count="1"
+                                [theme]="{ 'border-radius': '4px',margin:'0 12px 5px 0',height:'20px'}"></ngx-skeleton-loader>
                         </div>
                         <div class="row slot-time mb-2"
                             *ngFor="let item of booking.data.items[activeIndex]?.items || []; let i=index;">
@@ -29,8 +35,19 @@
                             </div>
                             <div class="col-lg-6 align-self-center">
                                 <h6 class="pricing">
-                                    {{config.currency}} {{calculateHourlyPrice(item.unitPrice,item.minutes,item.unitOfMeasure)}}</h6>
+                                    {{config.currency}}
+                                    {{calculateHourlyPrice(item.unitPrice,item.minutes,item.unitOfMeasure)}}</h6>
                                 <p>{{item.subTitle}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ngx-skeleton-loader *ngIf="isLoading" count="6"
+                                    [theme]="{ 'border-radius': '4px', height: '50px',margin:'0 12px 5px 0'}"></ngx-skeleton-loader>
+                            </div>
+                            <div class="col-lg-6">
+                                <ngx-skeleton-loader *ngIf="isLoading" count="6"
+                                    [theme]="{ 'border-radius': '4px', height: '50px',margin:'0 12px 5px 0'}"></ngx-skeleton-loader>
                             </div>
                         </div>
                     </div>
@@ -57,9 +74,8 @@
                         <div class="px-4 pb-4">
                             <div
                                 class="bg-warning bg-opacity-10 rounded-1 border border-1 d-flex justify-content-between p-2 mb-2">
-                                <p class="mb-2" *ngIf="booking.data.items.length>0">
-                                    {{booking.data.items[activeIndex].displayText ||0}}
-                                    Cleaner, {{orderSummary.itemName}}
+                                <p class="mb-2" >
+                                    {{orderSummary.count}} Cleaner, {{orderSummary.itemName}}
                                 </p>
                                 <p class="mb-2 ">
                                     {{config.currency}} {{orderSummary.total| number : '1.2-2'}}
