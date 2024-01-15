@@ -9,9 +9,9 @@
                         </div>
                         <div class="slot-item mb-4">
                             <button type="button" *ngFor="let item of booking.data.items; let i=index;"
+                                class="btn btn-outline-warning cleaner me-2"
                                 [ngClass]="{'active':item.selected,'inactive':!item.selected}"
-                                class="btn btn-outline-warning cleaner me-2" (click)="setActiveItem(i)"
-                                [disabled]="!item.isActive">
+                                [disabled]="!item.isActive" (click)="setActiveItem(i)">
                                 <img [src]="item.image" alt="person.jpg"
                                     class="me-1"><strong>{{item.displayText}}</strong>
                             </button>
@@ -19,14 +19,17 @@
                         <div class="mb-3">
                             <h6>{{booking.data.itemTitle}}</h6>
                         </div>
-                        <div class="row slot-time mb-2" *ngFor="let item of getItems()">
+                        <div class="row slot-time mb-2"
+                            *ngFor="let item of booking.data.items[activeIndex]?.items || []; let i=index;">
                             <div class="col-lg-6">
                                 <button type="button" class="btn btn-outline-warning w-100"
-                                    [ngClass]="{'active':item.isPrefer,'inactive':!item.isPrefer}"><strong>{{item.itemName}}</strong>
+                                    [ngClass]="{'active':item.isPrefer,'inactive':!item.isPrefer}"
+                                    (click)="setActiveSubItem(i)"><strong>{{item.itemName}}</strong>
                                 </button>
                             </div>
                             <div class="col-lg-6 align-self-center">
-                                <h6 class="pricing">AED {{item.unitPrice}}/{{item.unitOfMeasure}}</h6>
+                                <h6 class="pricing">{{currency}}
+                                    {{calculatePrice(item.unitPrice,item.minutes,item.unitOfMeasure)}}</h6>
                                 <p>{{item.subTitle}}</p>
                             </div>
                         </div>
@@ -41,7 +44,7 @@
                     <div class="order-summary">
                         <div class="px-4 pt-4 pb-1">
                             <div class="d-flex justify-content-between mb-4">
-                                <h5 class="mb-0 fw-bold">AED 85.00</h5>
+                                <h5 class="mb-0 fw-bold">{{currency}} 85.00</h5>
                                 <p class="mb-0 text-warning">Hide Order Summary <i class="bi bi-chevron-up "></i></p>
                             </div>
                             <button type="button" class="btn btn-warning w-100 text-white fw-bold">Proceed to Book <i
@@ -53,15 +56,15 @@
                             <div
                                 class="bg-warning bg-opacity-10 rounded-1 border border-1 d-flex justify-content-between p-2 mb-2">
                                 <p class="mb-2 ">1 Cleaner, 2 hours + 30 mins</p>
-                                <p class="mb-2 ">AED 85.00</p>
+                                <p class="mb-2 ">{{currency}} 85.00</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-1">Sub Total</p>
-                                <p class="fw-bold mb-1">AED 85.00</p>
+                                <p class="fw-bold mb-1">{{currency}} 85.00</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-1">Total (Inclusive 5% VAT)</p>
-                                <p class="fw-bold mb-1">AED 85.00</p>
+                                <p class="fw-bold mb-1">{{currency}} 85.00</p>
                             </div>
                         </div>
                     </div>

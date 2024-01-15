@@ -13,6 +13,7 @@ export class BookingComponent implements OnInit {
 
   public booking!: Booking;
   public activeIndex: number = 0;
+  public currency: string = "AED";
 
   constructor(
     private bookingService: BookingService,
@@ -22,11 +23,16 @@ export class BookingComponent implements OnInit {
   ngOnInit(): void {
     this.booking = { data: { items: [] as DataItem[] } as Data } as Booking;
     this.getBookingData();
+    // this.calculatePrice(inputs.unitPrice, inputs.minutes, inputs.unitOfMeasure)
   }
 
   public setActiveItem(index: number) {
     this.booking.data.items.forEach((item: DataItem, i: number) => item.selected = i === index);
     this.activeIndex = index;
+  }
+
+  public setActiveSubItem(index: number) {
+    this.booking.data.items[this.activeIndex].items.forEach((item: Item, i: number) => item.isPrefer = i === index);
   }
 
   private getBookingData() {
@@ -41,12 +47,10 @@ export class BookingComponent implements OnInit {
     });
   }
 
-
-  public getItems(): Item[] {
-    if (this.booking.data.items.length > 0) {
-      return this.booking.data.items[this.activeIndex].items;
-    } else {
-      return [];
-    }
+  public calculatePrice(unitPrice: number, minutes: number, unitOfMeasure: string): string {
+    const hours: number = minutes / 60;
+    const hourlyPrice: number = unitPrice / hours;
+    return `${hourlyPrice.toFixed(2)} / ${unitOfMeasure}`;
   }
+
 }
