@@ -18,6 +18,7 @@ export class BookingComponent implements OnInit {
   public orderSummary!: OrderSummary;
   public config: Config = CONFIG;
   public isLoading: boolean = false;
+  public showSummary: boolean = true;
 
   constructor(
     private bookingService: BookingService,
@@ -26,7 +27,7 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.booking = { data: { items: [] as DataItem[] } as Data } as Booking;
-    this.orderSummary = {count:0,itemName:'0 hours',total:0,grandTotal:0} as OrderSummary;
+    this.orderSummary = { count: 0, itemName: '0 hours', total: 0, grandTotal: 0 } as OrderSummary;
     this.getBookingData();
   }
 

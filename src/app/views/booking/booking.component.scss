@@ -7,6 +7,10 @@
     width: 19%;
 }
 
+.c-pointer{
+    cursor: pointer;
+}
+
 .btn-outline-warning {
     border: 2px solid;
     border-radius: 4px;
@@ -35,7 +39,7 @@
         }
     }
 
-    .slot-time {
+    .time-slot {
         button {
             padding: 12px 12px;
             text-align: left;
