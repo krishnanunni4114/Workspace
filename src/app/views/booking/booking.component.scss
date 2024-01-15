@@ -1,0 +1,63 @@
+.card {
+    border: inherit;
+}
+
+.cleaner {
+    width: 19%;
+}
+
+.btn-outline-warning {
+    border: 2px solid;
+    border-radius: 4px;
+    color: #000000;
+}
+
+
+.btn-outline-warning:hover {
+    background-color: #fdf8e5 !important;
+    border-color: #d9b445 !important;
+}
+
+.slot {
+    .active {
+        border-color: #d9b445;
+        background-color: #fdf8e5;
+    }
+
+    .inactive {
+        border-color: #e1e1e1;
+    }
+
+    .slot-item {
+        button {
+            padding: 9px 12px;
+        }
+    }
+
+    .slot-time {
+        button {
+            padding: 12px 12px;
+            text-align: left;
+        }
+
+        h6 {
+            margin: 0;
+            line-height: 18px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .pricing {
+            color: #11a711;
+        }
+    }
+}
+
+.order-summary {
+    .divider {
+        border: 1px solid #afafaf;
+        ;
+    }
+}
