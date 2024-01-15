@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Booking, Data, DataItem, Item } from 'src/app/shared/models/booking.model';
+import { CONFIG } from 'src/app/shared/configs/config';
+import { Booking, Data, DataItem, Item, OrderSummary } from 'src/app/shared/models/booking.model';
+import { Config } from 'src/app/shared/models/domain.model';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 
@@ -13,7 +15,8 @@ export class BookingComponent implements OnInit {
 
   public booking!: Booking;
   public activeIndex: number = 0;
-  public currency: string = "AED";
+  public orderSummary!: OrderSummary;
+  public config: Config = CONFIG;
 
   constructor(
     private bookingService: BookingService,
@@ -22,23 +25,31 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.booking = { data: { items: [] as DataItem[] } as Data } as Booking;
+    this.orderSummary = {} as OrderSummary;
     this.getBookingData();
-    // this.calculatePrice(inputs.unitPrice, inputs.minutes, inputs.unitOfMeasure)
   }
 
   public setActiveItem(index: number) {
     this.booking.data.items.forEach((item: DataItem, i: number) => item.selected = i === index);
     this.activeIndex = index;
+    this.setActiveSubItem(this.booking.data.items[index].items[0], 0);
   }
 
-  public setActiveSubItem(index: number) {
-    this.booking.data.items[this.activeIndex].items.forEach((item: Item, i: number) => item.isPrefer = i === index);
+  public setActiveSubItem(item: Item, index: number) {
+    this.booking.data.items[this.activeIndex]?.items.forEach((item: Item, i: number) => item.isPrefer = i === index);
+    this.orderSummary = this.getOrderSummary(item);
   }
 
   private getBookingData() {
     this.bookingService.getBookingData().subscribe({
       next: (booking: Booking) => {
-        if (booking.data.items.length > 0) booking.data.items[0].selected = true;
+        if (booking.data.items.length > 0) {
+          booking.data.items[0].selected = true;
+          const subItems: Item[] = booking.data.items[0].items;
+          if (subItems.length > 0) {
+            this.orderSummary = this.getOrderSummary(subItems.filter(itm => itm.isPrefer)[0]);
+          }
+        }
         this.booking = booking;
       },
       error: (error: HttpErrorResponse) => {
@@ -47,10 +58,17 @@ export class BookingComponent implements OnInit {
     });
   }
 
-  public calculatePrice(unitPrice: number, minutes: number, unitOfMeasure: string): string {
-    const hours: number = minutes / 60;
-    const hourlyPrice: number = unitPrice / hours;
-    return `${hourlyPrice.toFixed(2)} / ${unitOfMeasure}`;
+  private getOrderSummary(item: Item): OrderSummary {
+    return {
+      itemName: item.itemName,
+      total: item.unitPrice,
+      grandTotal: this.commonService.calculateVatAmount(item.unitPrice, this.config.vatPercentage)
+    } as OrderSummary;
   }
 
+  public calculateHourlyPrice(unitPrice: number, minutes: number, unitOfMeasure: string): string {
+    const hours: number = minutes / 60;
+    const pricePerHour: number = unitPrice / hours;
+    return `${pricePerHour.toFixed(2)} / ${unitOfMeasure}`;
+  }
 }

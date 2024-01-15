@@ -15,7 +15,7 @@ export interface DataItem {
     displayOrder: number;
     count: number;
     isActive: boolean;
-    selected:boolean;
+    selected: boolean;
     id: string;
     items: Item[];
 }
@@ -31,3 +31,9 @@ export interface Item {
     isPrefer?: boolean;
 }
 
+export interface OrderSummary {
+    count: number;
+    itemName: string;
+    total: number;
+    grandTotal: number;
+}

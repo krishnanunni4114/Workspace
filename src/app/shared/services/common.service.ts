@@ -24,4 +24,8 @@ export class CommonService {
         break;
     }
   }
+
+  public calculateVatAmount(amount: number, percentage: number): number {
+    return amount + (amount * percentage) / 100;
+  }
 }
