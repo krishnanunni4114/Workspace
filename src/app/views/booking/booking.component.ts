@@ -47,7 +47,6 @@ export class BookingComponent implements OnInit {
     this.bookingService.getBookingData().subscribe({
       next: (booking: Booking) => {
         if (booking.status === "success") {
-          booking.data.items = []
           if (booking.data.items.length > 0) {
             booking.data.items[0].selected = true;
             const subItems: Item[] = booking.data.items[0].items;
