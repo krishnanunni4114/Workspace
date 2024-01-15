@@ -82,7 +82,7 @@ export class BookingComponent implements OnInit {
     return `${pricePerHour.toFixed(2)} / ${unitOfMeasure}`;
   }
 
-  public book(): void {
+  public bookService(): void {
     if (this.booking.status === "success") {
       const selectedItem = this.booking.data.items.find(item => item.selected);
       if (selectedItem) {
