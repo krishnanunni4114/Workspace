@@ -90,14 +90,14 @@
     }
 }
 
-/* Tablet Styles */
+// Tablet Styles
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .container-fluid {
         padding: 1rem;
     }
 }
 
-/* Desktop Styles */
+// Desktop Styles 
 @media only screen and (min-width: 1024px) {
     .container-fluid {
         padding: 3rem;
