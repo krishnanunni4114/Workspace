@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CONFIG } from 'src/app/shared/configs/config';
@@ -19,14 +20,17 @@ export class BookingComponent implements OnInit {
   public config: Config = CONFIG;
   public isLoading: boolean = true;
   public showSummary: boolean = true;
+  public currentDate: string = "";
 
   constructor(
     private bookingService: BookingService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
-    this.booking = { status: "", data: { title: "", itemTitle: "", items: [] as DataItem[] } as Data } as Booking;
+    this.currentDate = this.getDate(new Date());
+    this.booking = { status: "", data: { fromDate: "", toDate: "", endDate: false, title: "", itemTitle: "", items: [] as DataItem[] } as Data } as Booking;
     this.orderSummary = { count: 0, itemName: '0 hours', total: 0, grandTotal: 0 } as OrderSummary;
     this.getBookingData();
   }
@@ -48,6 +52,19 @@ export class BookingComponent implements OnInit {
       total: item.unitPrice,
       grandTotal: this.commonService.calculateVatAmount(item.unitPrice, this.config.vatPercentage)
     } as OrderSummary;
+  }
+
+  private getDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || "";
+  }
+
+  public setEndDate(event: any) {
+    const checked: boolean = event.target.checked;
+    if (checked) {
+      this.booking.data.toDate = this.booking.data.fromDate;
+    } else {
+      this.booking.data.toDate = "";
+    }
   }
 
   public calculateHourlyPrice(unitPrice: number, minutes: number, unitOfMeasure: string): string {
@@ -83,6 +100,7 @@ export class BookingComponent implements OnInit {
       }
       this.isLoading = false;
     }
+    booking.data.fromDate = this.getDate(new Date());
     this.booking = booking;
   }
 
@@ -90,6 +108,13 @@ export class BookingComponent implements OnInit {
     if (this.booking.status === "success") {
       const selectedItem = this.booking.data.items.find(item => item.selected);
       if (selectedItem) {
+        if (!this.booking.data.fromDate) {
+          this.commonService.setToastr(401, "Please select a Date.");
+          return;
+        } else if (this.booking.data.fromDate && this.booking.data.endDate && !this.booking.data.toDate) {
+          this.commonService.setToastr(401, "Please select a To Date.");
+          return;
+        }
         const selectedSubItem = this.booking.data.items[this.activeIndex]?.items.find(item => item.isPrefer);
         if (selectedSubItem) {
           this.commonService.setToastr(200, `Congratulations! Your booking for "${selectedItem.count} Cleaner, ${selectedSubItem.itemName}" cleaning service has been confirmed.`);

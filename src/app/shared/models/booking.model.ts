@@ -6,6 +6,9 @@ export interface Booking {
 export interface Data {
     title: string;
     itemTitle: string;
+    fromDate: string;
+    toDate?: string;
+    endDate: boolean;
     items: DataItem[];
 }
 

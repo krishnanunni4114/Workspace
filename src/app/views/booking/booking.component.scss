@@ -3,10 +3,6 @@
     border-top: 2px solid #d9b445;
 }
 
-.cleaner {
-    width: 19%;
-}
-
 .c-pointer {
     cursor: pointer;
 }
@@ -17,10 +13,18 @@
     color: #000000;
 }
 
-
 .btn-outline-warning:hover {
     background-color: #fdf8e5 !important;
     border-color: #d9b445 !important;
+}
+
+.form-control {
+    border: var(--bs-border-width) solid #d9b445;
+}
+
+.form-check-input:checked {
+    background-color: #d9b445;
+    border-color: #d9b445;
 }
 
 .slot {
@@ -71,13 +75,15 @@
 @media only screen and (max-width: 767px) {
     .container-fluid {
         padding: 1rem;
-        .slot-item{
-            .btn-outline-warning{
+
+        .slot-item {
+            .btn-outline-warning {
                 margin-bottom: 10px;
             }
         }
-        .time-slot{
-            .btn-outline-warning{
+
+        .time-slot {
+            .btn-outline-warning {
                 margin: 10px 0;
             }
         }

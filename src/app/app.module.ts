@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookingComponent } from './views/booking/booking.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,12 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
+    FormsModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),],
-  providers: [provideAnimations()],
+  providers: [provideAnimations(),DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
