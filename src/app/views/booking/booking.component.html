@@ -1,4 +1,4 @@
-<div class="container-fluid p-5">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <div class="card shadow">
@@ -12,13 +12,16 @@
                                 [theme]="{ 'border-radius': '4px', height: '45px',width: '112px' ,margin:'0 12px 0 0'}"></ngx-skeleton-loader>
                         </div>
                         <div class="slot-item mb-4">
-                            <button type="button" *ngFor="let item of booking.data.items; let i=index;"
-                                class="btn btn-outline-warning cleaner me-2"
-                                [ngClass]="{'active':item.selected,'inactive':!item.selected}"
-                                [disabled]="!item.isActive" (click)="setActiveItem(i)">
-                                <img [src]="item.image" alt="person.jpg"
-                                    class="me-1"><strong>{{item.displayText}}</strong>
-                            </button>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 pe-0" *ngFor="let item of booking.data.items; let i=index;">
+                                    <button type="button" class="btn btn-outline-warning w-100"
+                                        [ngClass]="{'active':item.selected,'inactive':!item.selected}"
+                                        [disabled]="!item.isActive" (click)="setActiveItem(i)">
+                                        <img [src]="item.image" alt="person.jpg"
+                                            class="me-1"><strong>{{item.displayText}}</strong>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <h6>{{booking.data.itemTitle}}</h6>
@@ -27,13 +30,13 @@
                         </div>
                         <div class="row time-slot mb-2"
                             *ngFor="let item of booking.data.items[activeIndex]?.items || []; let i=index;">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <button type="button" class="btn btn-outline-warning w-100"
                                     [ngClass]="{'active':item.isPrefer,'inactive':!item.isPrefer}"
                                     (click)="setActiveSubItem(item,i)"><strong>{{item.itemName}}</strong>
                                 </button>
                             </div>
-                            <div class="col-lg-6 align-self-center">
+                            <div class="col-lg-6 col-md-6 align-self-center">
                                 <h6 class="pricing fw-bold">
                                     {{config.currency}}
                                     {{calculateHourlyPrice(item.unitPrice,item.minutes,item.unitOfMeasure)}}</h6>
@@ -41,11 +44,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <ngx-skeleton-loader *ngIf="isLoading" count="6"
                                     [theme]="{ 'border-radius': '4px', height: '50px',margin:'0 12px 5px 0'}"></ngx-skeleton-loader>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <ngx-skeleton-loader *ngIf="isLoading" count="6"
                                     [theme]="{ 'border-radius': '4px', height: '50px',margin:'0 12px 5px 0'}"></ngx-skeleton-loader>
                             </div>

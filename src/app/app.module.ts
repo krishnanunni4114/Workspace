@@ -22,7 +22,6 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
     NgbModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
     ToastrModule.forRoot({
-      timeOut: 2000,
       preventDuplicates: true,
     }),],
   providers: [provideAnimations()],
