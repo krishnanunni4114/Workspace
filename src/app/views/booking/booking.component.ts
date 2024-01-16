@@ -125,6 +125,7 @@ export class BookingComponent implements OnInit {
         }
         const selectedSubItem = this.booking.data.items[this.activeIndex]?.items.find(item => item.isPrefer);
         if (selectedSubItem) {
+          // Other function implementation
           this.commonService.setToastr(200, `Congratulations! Your booking for "${selectedItem.count} Cleaner, ${selectedSubItem.itemName}" cleaning service has been confirmed.`);
         } else {
           this.commonService.setToastr(401, "Please select a desired time slot.");
