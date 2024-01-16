@@ -117,10 +117,10 @@ export class BookingComponent implements OnInit {
       const selectedItem = this.booking.data.items.find(item => item.selected);
       if (selectedItem) {
         if (!this.booking.data.fromDate) {
-          this.commonService.setToastr(401, "Please select a Date.");
+          this.commonService.setToastr(401, "Choose a date to confirm your booking.");
           return;
         } else if (this.booking.data.fromDate && this.booking.data.endDate && !this.booking.data.toDate) {
-          this.commonService.setToastr(401, "Please select a To Date.");
+          this.commonService.setToastr(401, "Choose a to date to confirm your booking.");
           return;
         }
         const selectedSubItem = this.booking.data.items[this.activeIndex]?.items.find(item => item.isPrefer);
@@ -128,7 +128,7 @@ export class BookingComponent implements OnInit {
           // Other function implementation
           this.commonService.setToastr(200, `Congratulations! Your booking for "${selectedItem.count} Cleaner, ${selectedSubItem.itemName}" cleaning service has been confirmed.`);
         } else {
-          this.commonService.setToastr(401, "Please select a desired time slot.");
+          this.commonService.setToastr(401, "Please select a desired time slot to confirm your booking.");
         }
       } else {
         this.commonService.setToastr(401, "Please select the number of cleaners you want.");
