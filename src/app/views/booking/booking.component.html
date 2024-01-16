@@ -26,7 +26,7 @@
                             <div class="row mt-3" *ngIf="!isLoading">
                                 <div class="col-lg-4">
                                     <label for="fromDate">{{booking.data.endDate ? 'From':''}} Date</label>
-                                    <input id="fromDate" class="form-control" type="date" [min]="currentDate"
+                                    <input id="fromDate" class="form-control" type="date" [min]="currentDate" (change)="patchEndDate($event)"
                                         [(ngModel)]="booking.data.fromDate" />
                                 </div>
                                 <div class="col-lg-auto form-check align-self-center mt-4">

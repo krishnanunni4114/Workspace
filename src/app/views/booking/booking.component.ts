@@ -67,6 +67,14 @@ export class BookingComponent implements OnInit {
     }
   }
 
+  public patchEndDate(event: any): void {
+    const fromDate: string = event.target.value;
+    const toDate: string = this.booking.data.toDate;
+    if (fromDate > toDate) {
+      this.booking.data.toDate = fromDate;
+    }
+  }
+
   public calculateHourlyPrice(unitPrice: number, minutes: number, unitOfMeasure: string): string {
     const hours: number = minutes / 60;
     const pricePerHour: number = unitPrice / hours;
