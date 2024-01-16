@@ -55,7 +55,7 @@ export class BookingComponent implements OnInit {
   }
 
   private getDate(date: Date): string {
-    return this.datePipe.transform(date, 'yyyy-MM-dd') || "";
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || "" ;
   }
 
   public setEndDate(event: any) {
